@@ -1,0 +1,102 @@
+- Requête 1: 
+SELECT customer.customer_Name
+FROM customer
+INNER JOIN orders ON customer.customer_id = orders.customer_id
+INNER JOIN products ON orders.product_id = products.product_id 
+WHERE products.product_Name  IN ('Widget', 'Gadget')
+GROUP BY customer.customer_id;
+
+SELECT customer.customer_Name, products.price * orders.quantity
+FROM customer
+INNER JOIN orders ON customer.customer_id = orders.customer_id
+INNER JOIN products ON orders.product_id = products.product_id
+WHERE products.product_name IN ("widget", "gadget")
+GROUP BY customer.Customer_id;
+
+- Requête 2:
+
+SELECT customer.customer_Name, products.price * orders.quantity AS total_Cost
+FROM customer
+INNER JOIN orders ON customer.customer_id = orders.customer_id
+INNER JOIN products ON orders.product_id = products.product_id
+WHERE products.product_name = ‘widget’ 
+GROUP BY customer.Customer_id;
+
+- Requête 3:
+
+SELECT customer.customer_Name, products.price * orders.quantity
+FROM customer
+INNER JOIN orders ON customer.customer_id = orders.customer_id
+INNER JOIN products ON orders.product_id = products.product_id
+WHERE products.product_name = ‘Gadget’ 
+GROUP BY customer.Customer_id;
+
+- Requête 4: 
+
+SELECT customer.customer_Name, products.price * orders.quantity
+FROM customer
+INNER JOIN orders ON customer.customer_id = orders.customer_id
+INNER JOIN products ON orders.product_id = products.product_id
+WHERE products.product_name = ‘Doohickey’ 
+GROUP BY customer.Customer_id;
+
+- Requête 5: 
+SELECT 
+    Customer.customer_Name, 
+    SUM(CASE WHEN Product.product_name = 'Widget' THEN Orders.quantity ELSE 0 END) AS total_widgets_ordered,
+    SUM(CASE WHEN Product.product_name = 'Gadget' THEN Orders.quantity ELSE 0 END) AS total_gadgets_ordered,
+    SUM(Orders.quantity * Product.Price) AS total_order_cost
+FROM 
+    Customer
+    JOIN orders ON customer.customer_id = orders.customer_id
+    JOIN Product ON orders.product_id = products.product_id
+GROUP BY 
+    customer.customer_Name;
+
+- Requête 6:
+SELECT 
+    Products.product_name, 
+    SUM(orders.quantity) AS total_quantity_ordered
+FROM 
+    products
+    JOIN orders ON products.Product_id = orders.product_id
+GROUP BY 
+    products.product_name
+HAVING 
+    SUM(orders.quantity) > 0;
+
+- Requête 7:
+SELECT 
+    customer.customer_name, 
+    MAX(orders.quantity) AS Customer_List
+FROM 
+    customer
+    INNER JOIN orders ON customer.customer_id = orders.customer_id
+GROUP BY 
+    customer.customer_Name;
+
+- Requête 8:
+
+SELECT 
+    products.product_name, 
+    MAX(Orders.quantity) AS Product_List
+FROM 
+    product
+    INNER JOIN orders ON products.product_id = orders.product_id
+GROUP BY 
+    products.product_Name;
+
+- Requête 9: 
+
+SELECT 
+    customer.customer_name, 
+    COUNT(DISTINCT DATE_FORMAT(orders.order_date, 'years-month-day')) AS Day_List
+FROM 
+    customer
+    INNER JOIN orders ON customer.customer_id = orders.customer_id
+GROUP BY 
+    customer.customer_Name
+HAVING Day_List = 7;
+
+
+
